@@ -19,6 +19,7 @@ class ReservationType extends AbstractType
             ->add('date', DateType::class, [
                 'mapped' => false,
                 'placeholder' => '',
+                'format' => 'yyyy-MM-dd',
                 'years' => range(
                     (int)date("Y"),
                     (int)date("Y") + ((int)date("m") > 9 ? 1 : 0)
