@@ -26,3 +26,13 @@ Reserve: 预约
 Login: 登录
 XMU ID: 厦大ID
 Password: 密码
+Reserve %room%: 预约%room%
+Date: 日期
+Year: 年
+Month: 月
+Day: 日
+Start time: 开始时间
+Hour: 时
+Minute: 分
+End time: 结束时间
+Save: 提交
