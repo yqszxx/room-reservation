@@ -1,0 +1,83 @@
+{% set current_path = app.request.get('_route') %}
+
+<!doctype html>
+<html lang="zh_CN">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{% block title %}{% endblock %} - {% trans %}Room Reservation System{% endtrans %}</title>
+        {% block stylesheets %}
+            {# 'app' must match the first argument to addEntry() in webpack.config.js #}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+    </head>
+    <body>
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="{{path('index')}}">{% trans %}Room Reservation System{% endtrans %}</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    {% if app.user %}
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item{% if current_path == 'room_showAll' %} active{% endif %}">
+                                <a class="nav-link" href="{{ path('room_showAll') }}">{% trans %}Show All Rooms{% endtrans %}</a>
+                            </li>
+                            <li class="nav-item{% if current_path == 'user_reservation' %} active{% endif %}">
+                                <a class="nav-link" href="{{ path('user_reservation') }}">{% trans %}My Reservations{% endtrans %}</a>
+                            </li>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <li class="nav-item{% if current_path == 'reservation_pending' %} active{% endif %}">
+                                    <a class="nav-link" href="{{ path('reservation_pending') }}">{% trans %}Pending Reservations{% endtrans %}</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    {% endif %}
+                    <ul class="navbar-nav navbar-right">
+                        {% if app.user %}
+                            <li>
+                                <a class="nav-link" href="{{ path('user_profile') }}">{{ app.user.name }}</a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="{{ path('app_logout') }}">{% trans %}Logout{% endtrans %}</a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a class="nav-link" href="{{ path('app_login') }}">{% trans %}Login{% endtrans %}</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            {% block body %}{% endblock %}
+        </div>
+        <!-- Footer -->
+        <footer class="page-footer font-small bg-light pt-4">
+            <div class="footer-copyright text-center py-3">
+                厦门大学电子科学与技术学院 © 2020<br/>
+                Created by
+                <a href="https://yqszxx.org/">yqszxx</a>
+                with ❤
+            </div>
+        </footer>
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </body>
+</html>

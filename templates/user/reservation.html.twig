@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% trans %}My Reservations{% endtrans %}
+{% endblock %}
+
+{% block body %}
+    <h3 class="text-center">{% trans %}My Reservations{% endtrans %}</h3>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">{% trans %}Room Name{% endtrans %}</th>
+                <th scope="col">{% trans %}Time Span{% endtrans %}</th>
+                <th scope="col">{% trans %}Reason{% endtrans %}</th>
+                <th scope="col">{% trans %}State{% endtrans %}</th>
+                <th scope="col">{% trans %}Action{% endtrans %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reservation in reservations %}
+                <tr>
+                    <th scope="row">{{ reservation.room.name }}</th>
+                    <td>{{ reservation.startTime|date('Y-m-d h:i') }} ~ {{ reservation.endTime|date('Y-m-d h:i') }}</td>
+                    <td>{{ reservation.reason }}</td>
+                    <td>
+                        {% if reservation.marking == '' or reservation.marking == 'pending' %}
+                            <span class="badge badge-info">{% trans %}Pending{% endtrans %}</span>
+                        {% elseif reservation.marking == 'approved' %}
+                            <span class="badge badge-success">{% trans %}Approved{% endtrans %}</span>
+                        {% elseif reservation.marking == 'rejected' %}
+                            <span class="badge badge-danger">{% trans %}Rejected{% endtrans %}</span>
+                        {% endif %}
+                    </td>
+                    <td><a href="{{ path('reservation_cancel', {id: reservation.id}) }}">{% trans %}Cancel{% endtrans %}</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

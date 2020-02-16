@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    {% trans %}Rooms{% endtrans %}
+{% endblock %}
+
+{% block body %}
+    <h3 class="text-center">{% trans %}All Rooms{% endtrans %}</h3>
+    <div class="row row-cols-3">
+        {% for room in rooms %}
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ room.name }}</h5>
+{#                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>#}
+                        <a class="btn btn-primary" href="{{ path('room_show', {"rid": room.id}) }}">{% trans %}Occupation{% endtrans %}</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+

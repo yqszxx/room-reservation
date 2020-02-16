@@ -1,0 +1,22 @@
+framework:
+    workflows:
+        room_reservation:
+            type: 'state_machine'
+            audit_trail:
+                enabled: true
+            supports:
+                - App\Entity\Reservation
+            initial_marking: pending
+            places:
+                - pending
+                - rejected
+                - approved
+            transitions:
+                reject:
+                    guard: "is_granted('ROLE_ADMIN')"
+                    from: pending
+                    to:   rejected
+                approve:
+                    guard: "is_granted('ROLE_ADMIN')"
+                    from: pending
+                    to:   approved

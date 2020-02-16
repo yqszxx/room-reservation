@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% trans %}Pending Reservations{% endtrans %}
+{% endblock %}
+
+{% block body %}
+    <h3 class="text-center">{% trans %}Pending Reservations{% endtrans %}</h3>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">{% trans %}Room Name{% endtrans %}</th>
+            <th scope="col">{% trans %}Time Span{% endtrans %}</th>
+            <th scope="col">{% trans %}Reason{% endtrans %}</th>
+            <th scope="col">{% trans %}Action{% endtrans %}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for reservation in reservations %}
+            <tr>
+                <th scope="row">{{ reservation.room.name }}</th>
+                <td>{{ reservation.startTime|date('Y-m-d h:i') }} ~ {{ reservation.endTime|date('Y-m-d h:i') }}</td>
+                <td>{{ reservation.reason }}</td>
+                <td>
+                    <a type="button" class="btn btn-outline-success btn-sm" href="{{ path('reservation_approve', {id: reservation.id}) }}">{% trans %}Approve{% endtrans %}</a>
+                    <a type="button" class="btn btn-outline-danger btn-sm" href="{{ path('reservation_reject', {id: reservation.id}) }}">{% trans %}Reject{% endtrans %}</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

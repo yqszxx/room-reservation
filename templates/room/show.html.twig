@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% trans with {'%room%' : room.name} %}Occupation of %room%{% endtrans %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('calendar') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('calendar') }}
+{% endblock %}
+
+{% block body %}
+    <h3 class="text-center">{% trans with {'%room%' : room.name} %}Occupation of %room%{% endtrans %}</h3>
+    <div id="calendar"></div>
+    <script>
+        const reserveText = "{% trans %}Reserve{% endtrans %}";
+        const reservations = [
+            {% for reservation in reservations %}
+                {
+                    id: {{ reservation.id }},
+                    {% if reservation.marking == 'pending' or reservation.marking == '' %}
+                        title: "",
+                    {% else %}
+                        title: "{{ reservation.reason }}",
+                    {% endif %}
+                    start: "{{ reservation.startTime|date('Y-m-d h:i') }}",
+                    end: "{{ reservation.endTime|date('Y-m-d h:i') }}",
+                    {% if reservation.marking == 'pending' or reservation.marking == '' %}
+                        backgroundColor: '#808080',
+                    {% endif %}
+                    allDay: false,
+                },
+            {% endfor %}
+        ];
+    </script>
+{% endblock %}
+
