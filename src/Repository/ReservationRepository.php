@@ -22,7 +22,7 @@ class ReservationRepository extends ServiceEntityRepository
     public function countOverlapped(Reservation $reservation): int {
         return $this->createQueryBuilder('r')
             ->select('COUNT(r.id)')
-            ->andWhere("r.marking = 'approved' OR r.marking = 'pending' OR r.marking = ''")
+            ->andWhere("r.marking = 'approved' OR r.marking = 'pending' OR r.marking is NULL")
             ->andWhere('r.room = :room')
             ->andWhere('(r.startTime > :start AND r.startTime < :end) OR (r.endTime > :start AND r.endTime < :end)')
             ->setParameters([
@@ -38,7 +38,7 @@ class ReservationRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('r')
 //            ->andWhere('r.startTime > CURRENT_TIMESTAMP()')
-            ->andWhere("r.marking = 'approved' OR r.marking = '' OR r.marking = 'pending'")
+            ->andWhere("r.marking = 'approved' OR r.marking is NULL OR r.marking = 'pending'")
             ->orderBy('r.startTime');
         if ($room) $query->andWhere($query->expr()->eq('r.room', ':room'))->setParameter('room', $room);
         return $query->getQuery()->getResult();
@@ -47,7 +47,7 @@ class ReservationRepository extends ServiceEntityRepository
     public function findPending()
     {
         $query = $this->createQueryBuilder('r')
-            ->andWhere("r.marking = 'pending' OR r.marking = ''")
+            ->andWhere("r.marking = 'pending' OR r.marking is NULL")
             ->orderBy('r.startTime');
         return $query->getQuery()->getResult();
     }
