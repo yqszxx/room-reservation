@@ -24,7 +24,7 @@ class ReservationRepository extends ServiceEntityRepository
             ->select('COUNT(r.id)')
             ->andWhere("r.marking = 'approved' OR r.marking = 'pending' OR r.marking is NULL")
             ->andWhere('r.room = :room')
-            ->andWhere('(r.startTime > :start AND r.startTime < :end) OR (r.endTime > :start AND r.endTime < :end)')
+            ->andWhere('r.startTime < :end AND r.endTime > :start')
             ->setParameters([
                 'room' => $reservation->getRoom(),
                 'start' => $reservation->getStartTime(),
