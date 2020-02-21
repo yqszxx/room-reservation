@@ -63,3 +63,4 @@ No such reservation.: 无此预约！
 Leave blank to use default image (when creating) or preserve original image.: 如需使用默认图片（创建时）或无需更改（编辑时），请留空。
 Add Room: 创建会议室
 Change from enabled to disabled will reject all reservations of this room (including approved) starts later than current time.: 由“启用”改为“禁用”时，会将该会议室所有开始时间晚于当前时间的预约置为“已拒绝”状态（包括已经是“已通过”状态的预约）。
+User: 用户
