@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Workflow\Registry;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class ReservationController
@@ -27,12 +28,12 @@ class ReservationController extends AbstractController
     /**
      * @Route("/{id}/cancel", name="cancel", requirements={"id"="\d+"})
      */
-    public function cancel(int $id) {
+    public function cancel(int $id, TranslatorInterface $t) {
         $reservation = $this->getDoctrine()->getRepository(Reservation::class)
             ->findOneBy(['id' => $id, 'user' => $this->getUser()]);
 
         if (!$reservation) {
-            throw $this->createNotFoundException('No such reservation.');
+            throw $this->createNotFoundException($t->trans('No such reservation.'));
         }
 
         $entityManager = $this->getDoctrine()->getManager();
@@ -41,7 +42,7 @@ class ReservationController extends AbstractController
 
         $this->addFlash(
             'success',
-            'Your reservation was cancelled!'
+            $t->trans('Your reservation was cancelled!')
         );
 
         return $this->redirectToRoute('user_reservation');
@@ -64,7 +65,7 @@ class ReservationController extends AbstractController
      * @Route("/{id}/approve", name="approve", requirements={"id"="\d+"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function approve(int $id) {
+    public function approve(int $id, TranslatorInterface $t) {
         $reservation = $this->getDoctrine()->getRepository(Reservation::class)
             ->findOneBy(['id' => $id]);
 
@@ -77,7 +78,7 @@ class ReservationController extends AbstractController
 
         $this->addFlash(
             'success',
-            'Reservation approved!'
+            $t->trans('Reservation approved!')
         );
 
         return $this->redirectToRoute('reservation_pending');
@@ -87,7 +88,7 @@ class ReservationController extends AbstractController
      * @Route("/{id}/reject", name="reject", requirements={"id"="\d+"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function reject(int $id) {
+    public function reject(int $id, TranslatorInterface $t) {
         $reservation = $this->getDoctrine()->getRepository(Reservation::class)
             ->findOneBy(['id' => $id]);
 
@@ -100,7 +101,7 @@ class ReservationController extends AbstractController
 
         $this->addFlash(
             'success',
-            'Reservation rejected!'
+            $t->trans('Reservation rejected!')
         );
 
         return $this->redirectToRoute('reservation_pending');

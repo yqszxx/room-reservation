@@ -23,16 +23,21 @@
             {% for reservation in reservations %}
                 {
                     id: {{ reservation.id }},
-                    {% if reservation.marking == 'pending' or reservation.marking == '' %}
-                        title: "",
-                    {% else %}
+                    {% if is_granted('ROLE_ADMIN') %}
                         title: "{{ reservation.reason }}",
+                        {% if reservation.marking == 'pending' or reservation.marking == '' %}
+                            backgroundColor: '#808080',
+                        {% endif %}
+                    {% else %}
+                        {% if reservation.user == app.user %}
+                            title: "{{ reservation.reason }}",
+                        {% else %}
+                            title: "{% trans %}Reserved{% endtrans %}",
+                            backgroundColor: '#808080',
+                        {% endif %}
                     {% endif %}
                     start: "{{ reservation.startTime|date('Y-m-d h:i') }}",
                     end: "{{ reservation.endTime|date('Y-m-d h:i') }}",
-                    {% if reservation.marking == 'pending' or reservation.marking == '' %}
-                        backgroundColor: '#808080',
-                    {% endif %}
                     allDay: false,
                 },
             {% endfor %}

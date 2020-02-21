@@ -10,6 +10,7 @@
         <thead>
         <tr>
             <th scope="col">{% trans %}Room Name{% endtrans %}</th>
+            <th scope="col">{% trans %}User{% endtrans %}</th>
             <th scope="col">{% trans %}Time Span{% endtrans %}</th>
             <th scope="col">{% trans %}Reason{% endtrans %}</th>
             <th scope="col">{% trans %}Action{% endtrans %}</th>
@@ -19,6 +20,7 @@
         {% for reservation in reservations %}
             <tr>
                 <th scope="row">{{ reservation.room.name }}</th>
+                <th scope="row">{{ reservation.user.name }} | {{ reservation.user.phoneNumber }} | {{ reservation.user.xmuID }}</th>
                 <td>{{ reservation.startTime|date('Y-m-d h:i') }} ~ {{ reservation.endTime|date('Y-m-d h:i') }}</td>
                 <td>{{ reservation.reason }}</td>
                 <td>

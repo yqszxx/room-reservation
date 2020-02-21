@@ -23,6 +23,7 @@ Cancel: 取消
 Approved: 已通过
 Occupation of %room%: "%room%的占用情况"
 Reserve: 预约
+Reserved: 已被预约
 Login: 登录
 XMU ID: 厦大ID
 Password: 密码
@@ -38,3 +39,27 @@ End time: 结束时间
 Save: 提交
 Approve: 通过
 Reject: 拒绝
+You must fill in your phone number before reserving!: 在预约前，您必须设置自己的电话号码！
+Start time must be before end time!: 开始时间必须早于结束时间！
+Start time must be after current time!: 开始时间必须晚于现在时间！
+Time span conflicts!: 预约时段不可用！
+Your reservation was saved!: 您的预约已提交！
+New room created!: 新会议室已添加！
+Room Image: 会议室照片
+Edit: 编辑
+(Disabled): （已禁用）
+No such room.: 无此会议室。
+Edit %room%: 编辑 %room%
+Name of Room: 会议室名称
+Enabled: 启用
+Description: 简介
+Image (PNG file): 图片（PNG格式）
+Room updated!: 会议室已更新！
+Your reservation was cancelled!: 您的申请已取消！
+Reservation approved!: 预约已通过！
+Reservation rejected!: 预约已拒绝！
+Pending: 审核中
+No such reservation.: 无此预约！
+Leave blank to use default image (when creating) or preserve original image.: 如需使用默认图片（创建时）或无需更改（编辑时），请留空。
+Add Room: 创建会议室
+Change from enabled to disabled will reject all reservations of this room (including approved) starts later than current time.: 由“启用”改为“禁用”时，会将该会议室所有开始时间晚于当前时间的预约置为“已拒绝”状态（包括已经是“已通过”状态的预约）。

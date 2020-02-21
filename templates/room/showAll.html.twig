@@ -6,17 +6,34 @@
 
 {% block body %}
     <h3 class="text-center">{% trans %}All Rooms{% endtrans %}</h3>
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="row justify-content-end">
+            <div class="col-2 align-items-end">
+                <a class="btn btn-outline-primary" href="{{ path('room_add') }}">{% trans %}Add Room{% endtrans %}</a>
+            </div>
+        </div>
+    {% endif %}
     <div class="row row-cols-3">
         {% for room in rooms %}
-            <div class="col-sm-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ room.name }}</h5>
-{#                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>#}
-                        <a class="btn btn-primary" href="{{ path('room_show', {"rid": room.id}) }}">{% trans %}Occupation{% endtrans %}</a>
+            {% if room.enabled or is_granted('ROLE_ADMIN') %}
+                <div class="col-sm-3">
+                    <div class="card" style="width: 18rem;">
+                        <img src="{% if room.image %}{{ asset('upload/' ~ room.image) }}{% else %}{{ asset('room.png') }}{% endif %}"
+                             class="card-img-top"
+                             alt="{% trans %}Room Image{% endtrans %}"
+                             height="180px"
+                        >
+                        <div class="card-body">
+                            <h5 class="card-title">{{ room.name }}{% if not room.enabled %}&nbsp;{% trans %}(Disabled){% endtrans %}{% endif %}</h5>
+                            <div style="height: 3.6em"><p class="card-text">{{ room.description }}</p></div>
+                            <a class="btn btn-primary" href="{{ path('room_show', {"rid": room.id}) }}">{% trans %}Occupation{% endtrans %}</a>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a class="btn btn-secondary" href="{{ path('room_edit', {"rid": room.id}) }}">{% trans %}Edit{% endtrans %}</a>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
-            </div>
+            {% endif %}
         {% endfor %}
     </div>
 {% endblock %}

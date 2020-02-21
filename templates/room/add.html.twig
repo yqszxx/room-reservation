@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% trans %}Add Room{% endtrans %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('uploadBox') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('uploadBox') }}
+{% endblock %}
+
+{% block body %}
+    <h3 class="text-center">{% trans %}Add Room{% endtrans %}</h3>
+    <div class="row justify-content-center">
+        <div class="col-4">
+            {{ form(form) }}
+        </div>
+    </div>
+{% endblock %}

@@ -28,6 +28,21 @@ class Room
      */
     private $reservations;
 
+    /**
+     * @ORM\Column(type="string", length=511, nullable=true)
+     */
+    private $description;
+
+    /**
+     * @ORM\Column(type="string", length=127, nullable=true)
+     */
+    private $image;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $enabled;
+
     public function __construct()
     {
         $this->reservations = new ArrayCollection();
@@ -77,6 +92,42 @@ class Room
                 $reservation->setRoom(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getEnabled(): ?bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled): self
+    {
+        $this->enabled = $enabled;
 
         return $this;
     }

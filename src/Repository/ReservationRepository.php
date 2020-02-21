@@ -34,13 +34,13 @@ class ReservationRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
-    public function findReserved($room = null)
+    public function findReserved($room = null, $fromNow = false)
     {
         $query = $this->createQueryBuilder('r')
-//            ->andWhere('r.startTime > CURRENT_TIMESTAMP()')
             ->andWhere("r.marking = 'approved' OR r.marking is NULL OR r.marking = 'pending'")
             ->orderBy('r.startTime');
         if ($room) $query->andWhere($query->expr()->eq('r.room', ':room'))->setParameter('room', $room);
+        if ($fromNow) $query->andWhere('r.startTime > CURRENT_TIMESTAMP()');
         return $query->getQuery()->getResult();
     }
 
@@ -50,5 +50,15 @@ class ReservationRepository extends ServiceEntityRepository
             ->andWhere("r.marking = 'pending' OR r.marking is NULL")
             ->orderBy('r.startTime');
         return $query->getQuery()->getResult();
+    }
+
+    public function rejectAllFromNow($room)
+    {
+        $query = $this->createQueryBuilder('r')
+            ->update()
+            ->set('r.marking', "'rejected'")
+            ->andWhere('r.startTime > CURRENT_TIMESTAMP()');
+        $query->andWhere($query->expr()->eq('r.room', ':room'))->setParameter('room', $room);
+        $query->getQuery()->execute();
     }
 }

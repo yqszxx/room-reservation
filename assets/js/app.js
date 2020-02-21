@@ -13,4 +13,3 @@ import '../css/app.scss';
 // the bootstrap module doesn't export/return anything
 import 'bootstrap';
 
-console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
